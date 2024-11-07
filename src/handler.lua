@@ -13,8 +13,6 @@ local validate_client_roles = require("kong.plugins.jwt-keycloak.validators.role
 
 local re_gmatch = ngx.re.gmatch
 
-local JwtKeycloakHandler = BasePlugin:extend()
-
 local priority_env_var = "JWT_KEYCLOAK_PRIORITY"
 local priority
 if os.getenv(priority_env_var) then
@@ -24,8 +22,10 @@ else
 end
 kong.log.debug('JWT_KEYCLOAK_PRIORITY: ' .. priority)
 
-JwtKeycloakHandler.PRIORITY = priority
-JwtKeycloakHandler.VERSION = "1.1.0"
+local JwtKeycloakHandler = {
+  VERSION  = "1.1.0",
+  PRIORITY = priority,
+}
 
 function table_to_string(tbl)
     local result = ""
